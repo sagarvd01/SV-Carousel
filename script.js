@@ -1,17 +1,18 @@
 var BG = (function(d,w){
     if(!typeof w || !typeof d) return;
     let options;
+    let interval;
     init = function(obj){
         options = {};
         obj = (obj || {});
-        options.interval = obj.hasOwnProperty('interval') ? obj.interval : 5000;
+        options.interval = obj.hasOwnProperty('interval') ? obj.interval : 7000;
         options.count = obj.hasOwnProperty('count') ? obj.count : document.querySelectorAll('.slide').length;
         return this;
     }
     startSlide = function(){
         if(!typeof options) return;
         let index = 1;
-        w.setInterval( () => {
+        interval = w.setInterval( () => {
             if(index <= parseInt(options.count) - 1){
                 let element = d.querySelector('.slide-active:nth-child('+index+')');
                 element.classList.remove('slide-active');
@@ -24,6 +25,9 @@ var BG = (function(d,w){
                 index = 1;
             }
         },options.interval);
+    };
+    stopSlide = function(){
+        w.clearInterval(interval);
     };
     return this;
 })(document, window)
